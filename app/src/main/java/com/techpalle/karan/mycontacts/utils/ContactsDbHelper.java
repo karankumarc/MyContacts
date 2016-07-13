@@ -50,13 +50,47 @@ public class ContactsDbHelper extends SQLiteOpenHelper {
         return database.query(ContactsContract.Contact.TABLE_NAME, null, null, null, null, null, null);
     }
 
-    public int updateContact(String name, String newName, String newMobile, String newEmail, SQLiteDatabase database){
+    public boolean contactExists(String name, SQLiteDatabase database){
+        String[] projections= {ContactsContract.Contact.COLUMN_CONTACT_NAME,
+                ContactsContract.Contact.COLUMN_CONTACT_EMAIL,
+                ContactsContract.Contact.COLUMN_CONTACT_PHONE};
+        // cloumn_name like name
+        String selection = ContactsContract.Contact.COLUMN_CONTACT_NAME+" like %";
+        String[] selectionArgs = {name};
+        Cursor cursor = database.query(ContactsContract.Contact.TABLE_NAME, projections,
+                selection, selectionArgs, null, null, null);
+        if(cursor != null)
+            return false;
+        else
+            return true;
+    }
+
+    public Cursor getContactByName(String name, SQLiteDatabase database){
+        String[] projections= {ContactsContract.Contact.COLUMN_CONTACT_NAME,
+                ContactsContract.Contact.COLUMN_CONTACT_EMAIL,
+                ContactsContract.Contact.COLUMN_CONTACT_PHONE};
+        // cloumn_name like name
+        String selection = ContactsContract.Contact.COLUMN_CONTACT_NAME+" like %";
+        String[] selectionArgs = {name};
+        Cursor cursor = database.query(ContactsContract.Contact.TABLE_NAME, projections,
+                selection, selectionArgs, null, null, null);
+        return cursor;
+    }
+
+    public void deleteContactByName(String name, SQLiteDatabase database){
+        String selection = ContactsContract.Contact.COLUMN_CONTACT_NAME+" like %";
+        String[] selectionArgs = {name};
+        database.delete(ContactsContract.Contact.TABLE_NAME, selection, selectionArgs);
+    }
+
+
+    public int updateContact(String oldName, String newName, String newMobile, String newEmail, SQLiteDatabase database){
         ContentValues contentValues = new ContentValues();
         contentValues.put(ContactsContract.Contact.COLUMN_CONTACT_NAME, newName);
         contentValues.put(ContactsContract.Contact.COLUMN_CONTACT_EMAIL, newEmail);
         contentValues.put(ContactsContract.Contact.COLUMN_CONTACT_PHONE, newMobile);
         String selection = ContactsContract.Contact.COLUMN_CONTACT_NAME + " like ?";
-        String[] selectionArgs = {name};
+        String[] selectionArgs = {oldName};
         return database.update(ContactsContract.Contact.TABLE_NAME, contentValues, selection, selectionArgs);
     }
 

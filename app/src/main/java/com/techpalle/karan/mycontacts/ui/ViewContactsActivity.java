@@ -1,5 +1,6 @@
 package com.techpalle.karan.mycontacts.ui;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,9 +42,19 @@ public class ViewContactsActivity extends AppCompatActivity {
     }
 
     private void getContactsFromDatabase() {
-        /**
-         * To be completed tomorrow
-         */
+        database = helper.getReadableDatabase();
+        Cursor cursor = helper.getAllContacts(database);
+        if(cursor.moveToFirst()){
+            do{
+                /**
+                 * Write operation to be performed for one record
+                 */
+                Contact contact = new Contact(cursor.getString(1),cursor.getString(2),
+                    cursor.getString(3));
+                arrayList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        adapter.notifyDataSetChanged();
     }
 
     class MyAdapter extends BaseAdapter{

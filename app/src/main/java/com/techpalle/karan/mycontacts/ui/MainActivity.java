@@ -17,6 +17,7 @@ import com.techpalle.karan.mycontacts.R;
 public class MainActivity extends AppCompatActivity {
 
     Button buttonAddContact;
+    Button buttonViewContacts;
 
     //region Dual Spinner
     /*Spinner spinner1, spinner2;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         buttonAddContact = (Button) findViewById(R.id.button_add_contact);
+        buttonViewContacts = (Button) findViewById(R.id.button_view_contacts);
 
         buttonAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,16 +82,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        buttonViewContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ViewContactsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupWindowAnimations() {

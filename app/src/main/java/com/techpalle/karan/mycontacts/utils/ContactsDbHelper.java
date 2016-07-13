@@ -2,7 +2,6 @@ package com.techpalle.karan.mycontacts.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -44,10 +43,6 @@ public class ContactsDbHelper extends SQLiteOpenHelper {
         cv.put(ContactsContract.Contact.COLUMN_CONTACT_EMAIL, email);
         database.insert(ContactsContract.Contact.TABLE_NAME, null,cv);
         Log.d("DB_LOG","Row inserted");
-    }
-
-    public Cursor getAllContacts(SQLiteDatabase database){
-        return database.query(ContactsContract.Contact.TABLE_NAME, null, null, null, null, null, null);
     }
 
     public int updateContact(String name, String newName, String newMobile, String newEmail, SQLiteDatabase database){

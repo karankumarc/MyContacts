@@ -26,6 +26,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
+        setupWindowAnimations();
 
         helper = new ContactsDbHelper(this);
 
@@ -37,6 +38,15 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         buttonInsertContact.setOnClickListener(this);
     }
 
+    private void setupWindowAnimations() {
+        Fade fade = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            fade = (Fade) TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(fade);
+        }
+    }
 
     @Override
     public void onClick(View view) {
@@ -52,12 +62,6 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
 
         // Close database connection
         helper.close();
-
-        editTextContactName.setText("");
-        editTextContactEmail.setText("");
-        editTextContactNumber.setText("");
-
-        editTextContactName.requestFocus();
 
         Toast.makeText(AddContactActivity.this, "1 contact added successfully", Toast.LENGTH_SHORT).show();
     }

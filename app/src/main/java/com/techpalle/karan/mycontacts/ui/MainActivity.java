@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setupWindowAnimations();
 
         //region Dual Spinner
         /*arrayList1.add("Apple");
@@ -92,13 +91,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupWindowAnimations() {
-        Slide slide = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setExitTransition(slide);
-        }
-    }
 }
